@@ -34,7 +34,7 @@ var App = Backbone.Router.extend({
     console.log('add');
     var user = new User({
       first_name: '',
-      first_name: '',
+      last_name: '',
     });
     var formView = new FormView({
       model: user

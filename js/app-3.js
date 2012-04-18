@@ -3,17 +3,10 @@
 //////////////////////////////////
 var App = Backbone.Router.extend({
 
-  sampleData: [
-    {id: 1, first_name: 'Bob', last_name: 'Wu'},
-    {id: 2, first_name: 'John', last_name: 'Wang'},
-    {id: 3, first_name: 'Mary', last_name: 'Lin'},
-    {id: 4, first_name: 'Jimmy', last_name: 'Chen'},
-  ],
-
   users: null,
 
   initialize: function () {
-    this.users = new Users(this.sampleData);
+    this.users = new Users();
   },
 
   routes: {
@@ -23,7 +16,6 @@ var App = Backbone.Router.extend({
   },
 
   list: function () {
-    console.log('list');
     var tableView = new TableView({
       collection: this.users
     });
@@ -31,23 +23,22 @@ var App = Backbone.Router.extend({
   },
 
   newUser: function () {
-    console.log('add');
     var user = new User({
       first_name: '',
-      first_name: '',
+      last_name: '',
     });
     var formView = new FormView({
       model: user,
       collection: this.users
     });
     formView.on('done', function () {
+      this.users.add(user);
       this.navigate('', { trigger: true });
     }, this);
     $('#container').empty().append(formView.render().el);
   },
 
   editUser: function (id) {
-    console.log(id);
     var user = this.users.get(id);
     var formView = new FormView({
       model: user,
@@ -70,6 +61,8 @@ var User = Backbone.Model.extend({
     last_name: ''
   },
 
+  localStorage: new Backbone.LocalStorage('demo'),
+
   validate: function(attrs) {
     if (attrs.first_name === '') {
       return "'first_name' cannot be empty";
@@ -84,7 +77,8 @@ var User = Backbone.Model.extend({
 // Users
 //////////////////////////////////
 var Users = Backbone.Collection.extend({
-  model: User
+  model: User,
+  localStorage: new Backbone.LocalStorage('demo')
 });
 
 //////////////////////////////////
@@ -142,32 +136,19 @@ var FormView = Backbone.View.extend({
   saveUser: function (e) {
     e.preventDefault();
 
-    var model = this.model;
-    model.off('error');
-    model.on('error', function (model, error) {
+    this.model.off('error');
+    this.model.on('error', function (model, error) {
       alert(error);
     });
+    this.model.on('sync', function () {
+      console.log('sync');
+      this.trigger('done');
+    }, this);
 
-    // 將表單欄位值對應到 model 上。
-    model.set({
+    this.model.save({
       first_name: $("input[name=first_name]", this.el).val(),
       last_name: $("input[name=last_name]", this.el).val(),
     });
-
-    // 通過驗證時，就將 model 新增或更新至列表裡面。
-    if (model.isValid()) {
-
-      // 如果是新增的話，就取得列表裡最大的 `id` 值並加一，當做新的 `id` 值。
-      if (!model.id) {
-        var users = this.collection;
-        var newId = _.max(users.pluck('id')) + 1;
-        model.set('id', newId);
-        users.add(model);
-      }
-
-      // 完成編輯動作。
-      this.trigger('done');
-    }
   }
 });
 
