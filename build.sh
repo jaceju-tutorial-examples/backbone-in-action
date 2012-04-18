@@ -1,0 +1,1 @@
+r.js -o name="js/main" out="js/main-built.js" baseUrl="./" paths.order="lib/requirejs/order" paths.text="lib/requirejs/text"

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Backbone in Action</title>
+    <meta charset="UTF-8" />
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/screen.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="container" class="container">
+
+      <script type="text/template" id="table-view">
+        <p><a href="#new" class="btn">New</a></p>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </script>
+
+      <script type="text/template" id="row-view">
+        <td><%= id %></td>
+        <td><%= first_name %></td>
+        <td><%= last_name %></td>
+        <td><a href="#edit/<%= id %>" class="btn edit">Edit</a></td>
+      </script>
+
+      <script type="text/template" id="form-view">
+        <form class="well" method="post">
+          <label>First Name
+            <input type="text" class="span3" name="first_name" placeholder="First Name" value="<%= first_name %>" />
+          </label>
+          <label>Last Name
+            <input type="text" class="span3" name="last_name" placeholder="Last Name" value="<%= last_name %>" />
+          </label>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <a href="#" class="btn">Cancel</a>
+        </form>
+      </script>
+
+    </div>
+
+    <script src="lib/jquery/jquery-min.js"></script>
+    <script src="lib/underscore/underscore-min.js"></script>
+    <script src="lib/backbone/backbone-min.js"></script>
+    <script src="js/app-2.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- script data-main="js/main" src="lib/requirejs/require.js" -->
