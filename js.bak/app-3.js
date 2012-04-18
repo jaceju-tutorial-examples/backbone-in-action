@@ -7,6 +7,7 @@ var App = Backbone.Router.extend({
 
   initialize: function () {
     this.users = new Users();
+    this.users.fetch();
   },
 
   routes: {

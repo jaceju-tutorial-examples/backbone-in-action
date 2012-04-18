@@ -6,6 +6,8 @@ define(function () {
       last_name: ''
     },
 
+    localStorage: new Backbone.LocalStorage('demo'),
+
     validate: function(attrs) {
       if (attrs.first_name === '') {
         return "'first_name' cannot be empty";
